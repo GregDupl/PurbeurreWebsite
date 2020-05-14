@@ -1,0 +1,156 @@
+.colette{
+  width: 20em;
+  padding-top: 3em;
+}
+
+.remy{
+  width: 20em;
+  padding-top: 3em;
+}
+
+.icons{
+  width: 3em;
+  opacity: 0.8;
+  filter: invert(70%);
+}
+
+#search{
+  margin-right: 3em;
+}
+
+
+#logo{
+  width:1.5em;
+  margin-right:0.5em;
+}
+
+.cover{
+  background-size: cover;
+  padding-top: 7em;
+  padding-bottom: 3em;
+}
+
+.section{
+  padding-top: 2em;
+  padding-bottom: 2em;
+  background-color: #e9ebee;
+}
+
+
+.btn{
+  padding : 0.8em;
+  font-size: 0.7em;
+}
+
+.img_product{
+  background-size: cover;
+  height: 20em;
+  opacity: 0.8;
+  position: relative;
+}
+
+.img_cover{
+  background-size: cover;
+  border-radius: 100%;;
+  border-color: white;
+  height: 8em;
+  width: 8em;
+  margin:auto;
+  vertical-align: middle;
+}
+
+
+.col-img-head{
+  margin-bottom: 1em;
+}
+.subtitle{
+  padding-top: 2em;
+  padding-bottom: 2em;
+  background-color: #c45525;
+}
+
+.subtitle h2{
+  font-size: 1.3em;
+}
+
+.nutriscore{
+  background-color: #c45525;
+  border-radius: 100%;
+  position: absolute;
+  top:-0.5em;
+  right:-0.5em;
+}
+
+.nutriscore p{
+  margin-left:1em;
+  margin-right:1em;
+  margin-top: 0.5em;
+  margin-bottom:0.5em;
+  color: white;
+}
+
+.aliment{
+  margin-top: 3em;
+}
+
+.aliment p{
+  font-size: 1.2em;
+}
+
+.img_product:hover{
+  opacity: 1;
+  box-shadow: 0px 0px 5px 0px rgb(0,0,0);
+}
+
+.nutri_level .row{
+  margin-top: 1em;
+}
+
+#dropdownMenuButton{
+  background-color: inherit;
+  border-style: none;
+  padding: 0.5em;
+}
+
+.dropdown a{
+  color: #c45525;
+  font-size: 0.9em;
+}
+
+.dropdown hr{
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.dropdown a:hover{
+  color:#c45525;
+}
+
+.link{
+  margin-top: 3em;
+}
+
+.save{
+  background-color: #c45525;
+  padding: 0.8em;
+  border-radius: 5%;
+  border: 0px;
+  color: white;
+  font-size: 0.8em;
+}
+
+.score{
+  padding: 0.3em;
+  padding-left: 0.5em;
+  font-size: 1.5em;
+  border-radius: 100%
+}
+
+.score_list{
+  margin-bottom: 2em;
+}
+
+.pager li {
+  padding-top : 3em;
+  list-style: none;
+}

@@ -1,0 +1,24 @@
+{%load static%}
+
+  <header class="cover" style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+  url({% static 'homepage/img/bg-masthead.jpg' %})">
+
+  <div class="head container h-100">
+    <div class="row align-items-center">
+      <div class="col-md-12">
+        {%if url%}
+        <div class="row align-items-center">
+          <div class="col-md-2 col-img-head">
+            <div class="img_cover" style="background-image:url({{url}})"></div>
+          </div>
+          <div class="col-md-10">
+            <h2 class="text-uppercase text-white font-weight-bold justify-content-center">{{title}}</h2>
+          </div>
+          {%else%}
+            <h2 class="text-uppercase text-white font-weight-bold d-flex justify-content-center">{{title}}</h2>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,8 @@
+/env
+/__pycache__
+/.coverage
+/purbeurre_project/__pycache__
+/homepage/__pycache__
+/homepage/management/__pycache__
+/homepage/management/commands/__pycache__
+/homepage/migrations/__pycache__

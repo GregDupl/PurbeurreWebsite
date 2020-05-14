@@ -1,0 +1,183 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Purbeurre</title>
+
+  <!-- Font Awesome Icons -->
+  <link href="{% static 'homepage/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- Plugin CSS -->
+  <link href="{% static 'homepage/vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+
+
+  <!-- Theme CSS - Includes Bootstrap -->
+  <link href="{% static 'homepage/css/creative.min.css' %}" rel="stylesheet">
+  <link href="{% static 'homepage/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container">
+
+      <a class="navbar-brand js-scroll-trigger" href=" {%url 'homepage:index' %}">
+        <img src="{% static 'homepage/img/logo_pur_beurre.png' %}" alt="logo" id="logo">
+        Pur Beurre
+      </a>
+
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          <li class="nav-item">
+            <form action="{% url 'homepage:search'%}" method="get" onsubmit="return valider('header_form')" name="header_form">
+              <input name="query" placeholder="chercher" id="search">
+            </form>
+          </li>
+
+          {% if connected %}
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="{% url 'homepage:account'%}">
+              <img src="{% static 'homepage/img/login.png' %}" alt="aliments" class="icons" >
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="{%url 'homepage:favoris'%}">
+              <img src="{% static 'homepage/img/carrot.png' %}" alt="aliments" class="icons" >
+            </a>
+          </li>
+          {%endif%}
+          <li class="nav-item">
+            {%if connected == False%}
+            <div class="dropdown">
+              <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src="{% static 'homepage/img/disconnect.png' %}" alt="aliments" class="icons" >
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" data-toggle="modal" data-target="#ModalLogin" href="#">
+                  Se connecter
+                </a>
+                <hr>
+                <a class="dropdown-item" data-toggle="modal" data-target="#ModalNewUser" href="#">
+                  Créer un compte
+                </a>
+              </div>
+            </div>
+            {%else%}
+            <a class="nav-link js-scroll-trigger" href="{%url 'homepage:logout'%}">
+              <img src="{% static 'homepage/img/disconnect.png' %}" alt="logout" class="icons" >
+            </a>
+            {%endif%}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<!-- Modal for login -->
+  <div class="modal fade" id="ModalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Connexion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{%url 'homepage:login'%}" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="name">Nom</label>
+            <input type="text" class="form-control" name="name" placeholder="Entrez votre nom" required>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" class="form-control" name="password" placeholder="mot de passe" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Se connecter !</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal for newuser -->
+  <div class="modal fade" id="ModalNewUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Inscription</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{%url 'homepage:create'%}" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="name">votre nom</label>
+            <input type="text" class="form-control" name="name" placeholder="Entrez votre nom" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Votre adresse mail</label>
+            <input type="email" class="form-control" name="mail" placeholder="Entrez votre email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" class="form-control" name="password" placeholder="mot de passe" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Créer mon profil</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%block content%} {%endblock%}
+
+<!-- Footer -->
+<footer class="bg-light py-5">
+  <div class="container">
+    <div class="row">
+      <div class="small text-center text-muted col-md-6"><a href="{%url 'homepage:legal'%}">Mentions légales</a></div>
+      <div class="small text-center text-muted col-md-6"> <a href="{%url 'homepage:index'%}#contact"> contact </a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'homepage/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'homepage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Plugin JavaScript -->
+<script src="{% static 'homepage/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'homepage/vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'homepage/js/script.js' %}"></script>
+<!-- Custom scripts for this template -->
+<script src="{% static 'homepage/js/creative.min.js' %}"></script>
+
+</body>
+
+</html>

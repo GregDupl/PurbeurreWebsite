@@ -1,0 +1,17 @@
+{% extends 'homepage/base.html'%}
+{% load static %}
+
+{%block content%}
+
+{%include 'homepage/cover.html' with title=title%}
+
+<div class="section">
+    <div class="container">
+      <div class="row h-100 align-items-center justify-content-center">
+
+        <p>votre email : {{ email }} </p>
+      </div>
+    </div>
+</div>
+
+{%endblock%}

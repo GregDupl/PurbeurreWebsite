@@ -1,0 +1,93 @@
+{%extends 'homepage/base.html'%}
+
+{%block content%}
+{%include 'homepage/cover.html' with title=product.name%}
+
+<style>
+  {%if product.nutriscore == "a" or product.nutriscore == "b" %}
+    #{{product.nutriscore}} {background-color : green; color:white;}
+  {%elif product.nutriscore == "c"%}
+    #{{product.nutriscore}} {background-color : orange; color:white;}
+  {%else%}
+    #{{product.nutriscore}} {background-color : red; color:white;}
+  {%endif%}
+</style>
+
+<div class="section">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-6">
+        <h2>Score nutritionnel: </h2>
+          <div class="score_list">
+            <span class="score" id="a"> A </span>
+            <span class="score" id="b"> B </span>
+            <span class="score" id="c"> C </span>
+            <span class="score" id="d"> D </span>
+            <span class="score" id="e"> E </span>
+          </div>
+      </div>
+
+      <div class="col-md-6 nutri_level">
+        <h2>repères nutritionnels pour 100g: </h2>
+        <div class="row">
+          <div class="col-md-6">
+            <p> Gras : </p>
+          </div>
+          <div class="col-3">
+            <p> {{product.fat_level}} </p>
+          </div>
+          <div class="col-3">
+            <p> {{product.fat_value}} g </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <p> Sel : </p>
+          </div>
+          <div class="col-3">
+            <p> {{product.salt_level}} </p>
+          </div>
+          <div class="col-3">
+            <p> {{product.salt_value}} g </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <p> Sucre : </p>
+          </div>
+          <div class="col-3">
+            <p> {{product.sugars_level}} </p>
+          </div>
+          <div class="col-3">
+            <p> {{product.sugars_value}} g </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <p> Gras saturé : </p>
+          </div>
+          <div class="col-3">
+            <p> {{product.saturated_level}} </p>
+          </div>
+          <div class="col-3">
+            <p> {{product.saturated_value}} g </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="text-center link">Retrouvez ce produit sur <a href={{product.link}}>OpenFoodfacts</a></h3>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{%endblock content%}

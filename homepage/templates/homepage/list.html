@@ -1,0 +1,109 @@
+{%extends 'homepage/base.html'%}
+
+{%block content%}
+
+{%include 'homepage/cover.html' with title=title url=url%}
+
+  <div class="section subtitle">
+    <div class="container">
+      <div class="row">
+        <h2 class="col-md-12 text-center">{{subtitle}}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+    <div class="row">
+      {%if request == 'substitut' %}
+
+        {%for product in product %}
+          <div class="col-md-4 text-center aliment">
+            <a href="{% url 'homepage:detail' id=product.id%}">
+              <div class="img_product" style="background-image:url({{product.image}})">
+                <div class="nutriscore">
+                  <p>{{product.nutriscore|upper}}</p>
+                </div>
+              </div>
+            </a>
+            <p>{{product.name}} <br> {{product.brand}}</p>
+            {%if connected%}
+
+              {%if product not in favoris%}
+              <div data-url="{%url 'homepage:save'%}" class="saveButtons btn btn-primary btn-lg" role="button" aria-disabled="False" id="{{product.id}}"> enregistrer </div>
+
+              {%else%}
+              <div  class="btn btn-primary btn-lg disabled" role="button" aria-disabled="true">favoris enregistré</div>
+
+              {%endif%}
+
+            {%else%}
+              <div class="btn btn-primary btn-lg disabled" role="button" aria-disabled="true">enregistrer</div>
+
+            {%endif%}
+          </div>
+        {%endfor%}
+
+      {%elif request == 'favoris'%}
+
+        {%if product|length_is:"0"%}
+          <p>C'est un peu vide par ici.. n'hésite pas à ajouter tes produits préférés en favoris !</p>
+        {%else%}
+          {%for product in product %}
+            <div class="col-md-4 text-center aliment">
+              <a href="{% url 'homepage:detail' id=product.product_id.id%}">
+                <div class="img_product" style="background-image:url({{product.product_id.image}})">
+                  <div class="nutriscore">
+                    <p>{{product.product_id.nutriscore|upper}}</p>
+                  </div>
+                </div>
+              </a>
+              <p>{{product.product_id.name}} <br> {{product.product_id.brand}}</p>
+            </div>
+          {%endfor%}
+        {%endif%}
+
+      {%else%}
+
+          {%for product in product %}
+            <div class="col-md-4 text-center aliment">
+              <a href="{% url 'homepage:substituts' id=product.id%}">
+                <div class="img_product" style="background-image:url({{product.image}})"></div>
+              </a>
+              <p>{{product.name}} <br> {{product.brand}}</p>
+            </div>
+          {%endfor%}
+
+        {%endif%}
+        {%if paginate%}
+        <div class="container">
+
+        <div class="row">
+          <div class="col-md-12">
+
+          <nav aria-label="...">
+            <ul class="pager">
+              <div class="row">
+                <div class="col-md-6 text-center">
+                  {% if product.has_previous %}
+                  <li><a href="?{% if q %}query={{q}}&{% endif %}page={{ product.previous_page_number }}">Précédent</a></li>
+                  {% endif %}
+
+                </div>
+                <div class="col-md-6 text-center">
+                  {% if product.has_next %}
+                  <li><a href="?{% if q %}query={{q}}&{% endif %}page={{ product.next_page_number }}">Suivant</a></li>
+                  {% endif %}
+
+                </div>
+              </div>
+            </ul>
+          </nav>
+        </div>
+        </div>
+      </div>
+        {%endif%}
+    </div>
+  </div>
+</div>
+
+{%endblock content%}

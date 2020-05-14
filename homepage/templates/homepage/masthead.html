@@ -1,0 +1,18 @@
+<!-- Masthead -->
+<header class="masthead">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center justify-content-center text-center">
+      <div class="col-lg-10 align-self-end">
+        <h1 class="text-uppercase text-white font-weight-bold">Du gras, oui, mais de qualité !</h1>
+        <hr class="divider my-4">
+      </div>
+      <div class="col-lg-8 align-self-baseline">
+        <h2 class="text-white-75 font-weight-light mb-5">Trouvez un produit de substitution pour ce que vous consommez tous les jours</h2>
+        <form class="" action="{% url 'homepage:search'%}" method="get" onsubmit="return valider('index_form')" name="index_form">
+          <input type="text" name="query" value="" placeholder="Produit">
+          <button type="submit" name="button"> chercher </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
