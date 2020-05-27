@@ -3,5 +3,9 @@ python: "3.6"      # current default Python on Travis CI
 # command to install dependencies
 install: pip install -r requirements.txt
 services : postgresql
+
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+
 # command to run tests
 script: ./manage.py test homepage
