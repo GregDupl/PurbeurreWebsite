@@ -2,6 +2,8 @@
 /__pycache__
 /.coverage
 /purbeurre_project/__pycache__
+/purbeurre_project/settings/__pycache__
+/purbeurre_project/settings/production.py
 /homepage/__pycache__
 /homepage/management/__pycache__
 /homepage/management/commands/__pycache__

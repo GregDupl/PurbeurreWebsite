@@ -2,10 +2,10 @@ language: python
 python: "3.6"      # current default Python on Travis CI
 # command to install dependencies
 install: pip install -r requirements.txt
+
 services : postgresql
 
-before_script:
-  - sudo -u postgres psql -c 'create database travis_ci_test;'
+env: DJANGO_SETTINGS_MODULE=disquaire_project.settings.travis
 
 # command to run tests
 script: ./manage.py test homepage
