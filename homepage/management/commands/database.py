@@ -82,7 +82,9 @@ class Database:
         for value in CATEGORY.values():
             cat = GetCategory(value)
 
-            Category.objects.create(name=cat.name)
+            if not Category.objects.filter(name=cat.name).exists():
+                Category.objects.create(name=cat.name)
+
             key = Category.objects.get(name=cat.name)
 
             total_products = 0
@@ -107,25 +109,26 @@ class Database:
                     else:
                         total_products += 1
 
-                        Product.objects.create(
-                        code = product_object.code,
-                        name = product_object.name,
-                        keywords = product_object.keywords,
-                        brand = product_object.brand,
-                        nutriscore = product_object.nutri,
-                        fat_value = product_object.fat_value,
-                        saturated_value = product_object.saturated_value,
-                        salt_value = product_object.salt_value,
-                        sugars_value =product_object.sugars_value,
-                        fat_level = product_object.fat_level,
-                        saturated_level = product_object.saturated_level,
-                        salt_level = product_object.salt_level,
-                        sugars_level =product_object.sugars_level,
-                        stores = product_object.stores,
-                        link = product_object.link,
-                        image = product_object.img,
-                        id_category = product_object.cat,
-                        )
+                        if not Product.objects.filter(code=product_object.code).exists():
+                            Product.objects.create(
+                            code = product_object.code,
+                            name = product_object.name,
+                            keywords = product_object.keywords,
+                            brand = product_object.brand,
+                            nutriscore = product_object.nutri,
+                            fat_value = product_object.fat_value,
+                            saturated_value = product_object.saturated_value,
+                            salt_value = product_object.salt_value,
+                            sugars_value =product_object.sugars_value,
+                            fat_level = product_object.fat_level,
+                            saturated_level = product_object.saturated_level,
+                            salt_level = product_object.salt_level,
+                            sugars_level =product_object.sugars_level,
+                            stores = product_object.stores,
+                            link = product_object.link,
+                            image = product_object.img,
+                            id_category = product_object.cat,
+                            )
 
                     product_number += 1
                 page_number += 1
@@ -137,5 +140,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print("Updating database...")
         newData = Database()
-        newData.insert_data(100)
+        newData.insert_data(10)
         print("Done !")
