@@ -65,7 +65,7 @@ class GetCategory:
 class Database:
     """Insertion datas from OpenFoodFact in purbeurre's database"""
 
-    def get_api_product(category_name, page_number):
+    def get_api_product(self, category_name, page_number):
         page = (
             "https://fr.openfoodfacts.org/categorie/"
             + category_name
@@ -129,7 +129,6 @@ class Database:
                             image = product_object.img,
                             id_category = product_object.cat,
                             )
-
                     product_number += 1
                 page_number += 1
 
