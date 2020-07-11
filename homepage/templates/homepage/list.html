@@ -58,6 +58,7 @@
                 </div>
               </a>
               <p>{{product.product_id.name}} <br> {{product.product_id.brand}}</p>
+              <a href="{% url 'homepage:delete' id=product.product_id.id%}" class="delete_me"> Supprimez </a>
             </div>
           {%endfor%}
         {%endif%}
