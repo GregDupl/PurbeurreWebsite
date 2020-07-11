@@ -186,6 +186,24 @@ def favoris(request):
     return render(request, "homepage/list.html", context)
 
 
+def delete(request,id):
+    """ delete the saved product and load favoris page"""
+    Favoris.objects.get(id=id, user=resuest.user).delete()
+
+    product_list = Favoris.objects.filter(user=request.user)
+    product = make_a_pagination(request, product_list)
+
+    context = {
+        "request": "favoris",
+        "title": "mes aliments",
+        "subtitle": "Retrouvez ici tous vos aliments préférés !",
+        "product": product,
+        "connected": request.user.is_authenticated,
+        "paginate": True,
+    }
+    return render(request, "homepage/favoris.html")
+
+
 @csrf_exempt
 def save(request):
     """ add the product to the user favoris and
