@@ -16,4 +16,5 @@ urlpatterns = [
     url(r"^favoris/$", views.favoris, name="favoris"),
     url(r"^save/$", views.save, name="save"),
     url(r"^legal$", views.legal, name="legal"),
+    url(r"^delete/(?P<id>[0-9]+)/$", views.delete, name="delete"),
 ]
