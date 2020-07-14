@@ -188,7 +188,10 @@ def favoris(request):
 
 def delete(request,id):
     """ delete the saved product and load favoris page"""
-    Favoris.objects.get(product_id=id, user=request.user).delete()
+
+    f = Favoris.objects.filter(product_id=id, user=request.user)
+    if f.exists():
+        f.delete()
 
     product_list = Favoris.objects.filter(user=request.user)
     product = make_a_pagination(request, product_list)
