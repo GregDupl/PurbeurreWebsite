@@ -1,0 +1,84 @@
+{%extends 'homepage/base.html'%}
+
+{%block content%}
+
+{%include 'homepage/cover.html' with title='Paramètres de compte'%}
+
+<div class="section">
+  <div class="container">
+    <div class="row">
+      <p class="col-md-12"> Votre nom actuel : {{name}}</p>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+
+      <form action="{%url 'homepage:newname'%}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="name">Votre nouveau nom</label>
+          <input type="text" class="form-control" name="name" placeholder="Entrez votre nom" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="container">
+    <hr>
+    <div class="row">
+      <p class="col-md-12">
+        Votre email actuel : {{email}}
+      </p>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+
+      <form action="{%url 'homepage:newmail'%}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="email">Votre nouvelle adresse mail</label>
+          <input type="email" class="form-control" name="mail" placeholder="Entrez votre email" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="container">
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+
+      <form action="{%url 'homepage:newpass'%}" method="post" onsubmit="return confirm()" name="passform">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="password">Confirmer votre mot de passe actuel</label>
+          <input type="password" class="form-control" name="actualpassword" placeholder="mot de passe" required>
+          {%if alert%}
+          <div class=""> {{alert}}</div>
+          {%endif%}
+        </div>
+        <div class="form-group">
+          <label for="password">Votre nouveau mot de passe</label>
+          <input type="password" class="form-control" name="newpassword" placeholder="mot de passe" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Confirmer votre nouveau mot de passe</label>
+          <input type="password" class="form-control" name="confirmpassword" placeholder="mot de passe" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>
+{%endblock content%}
