@@ -1,7 +1,7 @@
 from homepage.models import *
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.http import JsonResponse, HttpRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -222,3 +222,54 @@ def save(request):
 def legal(request):
     """ Simply load legal notice page """
     return render(request, "homepage/legal.html")
+
+
+def update(request):
+
+    context = {
+        "name": request.user.get_username(),
+        "email": request.user.email,
+        "connected": request.user.is_authenticated,
+    }
+
+    return render(request, "homepage/update.html", context)
+
+
+def newmail(request):
+    request.user.email = request.POST['mail']
+    context = {
+        "name": request.user.get_username(),
+        "email": request.user.email,
+        "connected": request.user.is_authenticated,
+    }
+
+    return render(request, "homepage/update.html", context)
+
+
+def newname(request):
+    request.user.username = request.POST['name']
+    context = {
+        "name": request.user.get_username(),
+        "email": request.user.email,
+        "connected": request.user.is_authenticated,
+    }
+
+    return render(request, "homepage/update.html", context)
+
+
+def newpass(request):
+    context = {
+        "name": request.user.get_username(),
+        "email": request.user.email,
+        "connected": request.user.is_authenticated,
+    }
+
+    if request.user.check_password(request.POST['actualpassword']):
+        request.user.set_password(request.POST['newpassword'])
+        request.user.save()
+        update_session_auth_hash(request, request.user)
+    else:
+        context['alert']='mot de passe invalide !'
+
+
+    return render(request, "homepage/update.html", context)
