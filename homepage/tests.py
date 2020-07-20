@@ -223,7 +223,55 @@ class DeleteTestCase(TestCase):
         c.login(username="temporary", password="secret")
 
         initial_number = Favoris.objects.count()
-        response = c.get(reverse("homepage:delete"), {"id": product.id})
+        response = c.get(reverse("homepage:delete", kwargs={"id": product.id}))
         new_number = Favoris.objects.count()
-        self.assertEqual(initial_number,new_number - 1)
+        self.assertEqual(initial_number,new_number+1)
+        self.assertEqual(response.status_code, 200)
+
+
+class UpdateTestCase(TestCase):
+    def setUp(self):
+        User.objects.create_user("temporary", "temporary@mail.com", "secret")
+
+    def test_update(self):
+        c = Client()
+        c.login(username="temporary", password="secret")
+        response=c.get(reverse("homepage:update"))
+        self.assertEqual(response.status_code, 200)
+
+
+class NewemailTestCase(TestCase):
+    def setUp(self):
+        User.objects.create_user("temporary", "temporary@mail.com", "secret")
+
+    def test_newemail(self):
+        c = Client()
+        c.login(username="temporary", password="secret")
+        response = c.post(reverse("homepage:newmail"), {"mail": "newemail@mail.com"})
+        self.assertEqual(response.status_code, 200)
+
+
+class NewnameTestCase(TestCase):
+    def setUp(self):
+        User.objects.create_user("temporary", "temporary@mail.com", "secret")
+
+    def test_newemail(self):
+        c = Client()
+        c.login(username="temporary", password="secret")
+        response = c.post(reverse("homepage:newname"), {"name": "newtemporary"})
+        self.assertEqual(response.status_code, 200)
+
+
+class NewpassTestCase(TestCase):
+    def setUp(self):
+        User.objects.create_user("temporary", "temporary@mail.com", "secret")
+
+    def test_newpass(self):
+        c = Client()
+        c.login(username="temporary", password="secret")
+        response = c.post(reverse("homepage:newpass"),
+        {"actualpassword": "secret",
+        "newpassword":"newpass",
+        "confirmpassword":"newpass"
+        })
         self.assertEqual(response.status_code, 200)
