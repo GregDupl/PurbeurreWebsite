@@ -238,8 +238,6 @@ def update(request):
     context['email']=request.user.email
     context['connected']=request.user.is_authenticated
 
-    print(context)
-
     return render(request, "homepage/update.html", context)
 
 
