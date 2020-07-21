@@ -226,33 +226,19 @@ def legal(request):
 
 def update(request):
 
-    context = {
-        "name": request.user.get_username(),
-        "email": request.user.email,
-        "connected": request.user.is_authenticated,
-    }
+    context = {}
+    if request.method == 'POST':
+        if request.user.check_password(request.POST['password']):
+            request.user.email = request.POST['mail']
+            request.user.username = request.POST['name']
+        else:
+            context['alert']='mot de passe invalide !'
 
-    return render(request, "homepage/update.html", context)
+    context['name']=request.user.get_username()
+    context['email']=request.user.email
+    context['connected']=request.user.is_authenticated
 
-
-def newmail(request):
-    request.user.email = request.POST['mail']
-    context = {
-        "name": request.user.get_username(),
-        "email": request.user.email,
-        "connected": request.user.is_authenticated,
-    }
-
-    return render(request, "homepage/update.html", context)
-
-
-def newname(request):
-    request.user.username = request.POST['name']
-    context = {
-        "name": request.user.get_username(),
-        "email": request.user.email,
-        "connected": request.user.is_authenticated,
-    }
+    print(context)
 
     return render(request, "homepage/update.html", context)
 
