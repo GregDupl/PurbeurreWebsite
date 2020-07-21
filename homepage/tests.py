@@ -239,27 +239,17 @@ class UpdateTestCase(TestCase):
         response=c.get(reverse("homepage:update"))
         self.assertEqual(response.status_code, 200)
 
-
-class NewemailTestCase(TestCase):
-    def setUp(self):
-        User.objects.create_user("temporary", "temporary@mail.com", "secret")
-
-    def test_newemail(self):
+    def test_post(self):
         c = Client()
         c.login(username="temporary", password="secret")
-        response = c.post(reverse("homepage:newmail"), {"mail": "newemail@mail.com"})
+        response = c.post(reverse("homepage:update"),
+        {
+        "mail": "newemail@mail.com",
+        "name" : "newname",
+        "password":"secret"
+        })
         self.assertEqual(response.status_code, 200)
 
-
-class NewnameTestCase(TestCase):
-    def setUp(self):
-        User.objects.create_user("temporary", "temporary@mail.com", "secret")
-
-    def test_newemail(self):
-        c = Client()
-        c.login(username="temporary", password="secret")
-        response = c.post(reverse("homepage:newname"), {"name": "newtemporary"})
-        self.assertEqual(response.status_code, 200)
 
 
 class NewpassTestCase(TestCase):
