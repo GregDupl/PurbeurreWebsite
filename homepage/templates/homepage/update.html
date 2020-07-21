@@ -7,42 +7,28 @@
 <div class="section">
   <div class="container">
     <div class="row">
-      <p class="col-md-12"> Votre nom actuel : {{name}}</p>
-    </div>
-    <div class="row">
       <div class="col-md-12">
 
-      <form action="{%url 'homepage:newname'%}" method="post">
+      <form action="{%url 'homepage:update'%}" method="post">
         {% csrf_token %}
         <div class="form-group">
-          <label for="name">Votre nouveau nom</label>
-          <input type="text" class="form-control" name="name" placeholder="Entrez votre nom" required>
+          <label for="name">Nom : </label>
+          <input type="text" class="form-control" name="name" placeholder="Entrez votre nom" value={{name}} required>
         </div>
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
-      </form>
-    </div>
-    </div>
-  </div>
-</div>
 
-
-<div class="section">
-  <div class="container">
-    <hr>
-    <div class="row">
-      <p class="col-md-12">
-        Votre email actuel : {{email}}
-      </p>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-
-      <form action="{%url 'homepage:newmail'%}" method="post">
-        {% csrf_token %}
         <div class="form-group">
-          <label for="email">Votre nouvelle adresse mail</label>
-          <input type="email" class="form-control" name="mail" placeholder="Entrez votre email" required>
+          <label for="email">Email : </label>
+          <input type="email" class="form-control" name="mail" placeholder="Entrez votre email" value={{email}}  required>
         </div>
+
+        <div class="form-group">
+          <label for="password">Entrez votre mot de passe si vous souhaitez modifiez vos informatiions de profil :</label>
+          <input type="password" class="form-control" name="password" placeholder="mot de passe" required>
+          {%if alert%}
+          <div class=""> {{alert}}</div>
+          {%endif%}
+        </div>
+
         <button type="submit" class="btn btn-primary">Enregistrer</button>
       </form>
     </div>
