@@ -18,7 +18,5 @@ urlpatterns = [
     url(r"^legal$", views.legal, name="legal"),
     url(r"^delete/(?P<id>[0-9]+)/$", views.delete, name="delete"),
     url(r"^update", views.update, name="update"),
-    url(r"^email", views.newmail, name="newmail"),
-    url(r"^name", views.newname, name="newname"),
     url(r"^pass", views.newpass, name="newpass"),
 ]
