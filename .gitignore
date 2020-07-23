@@ -8,3 +8,4 @@
 /homepage/management/__pycache__
 /homepage/management/commands/__pycache__
 /homepage/migrations/__pycache__
+geckodriver.log
