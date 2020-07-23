@@ -276,5 +276,6 @@ def newpass(request):
 
 
 def notfound(request, exception):
+    """ load 404 page and return status code 404 """
     HttpResponse.status_code = 404
     return render(request, "homepage/404.html")
