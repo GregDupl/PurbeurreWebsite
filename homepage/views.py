@@ -225,7 +225,8 @@ def legal(request):
 
 
 def update(request):
-
+    """ load update page if request method is GET or
+    update user informations (name and mail) if request mesthod is POST """
     context = {}
     if request.method == 'POST':
         if request.user.check_password(request.POST['password']):
@@ -242,6 +243,8 @@ def update(request):
 
 
 def newpass(request):
+    """ update user's password if checking of actual password is correct """
+
     context = {
         "name": request.user.get_username(),
         "email": request.user.email,

@@ -28,6 +28,7 @@ const valider = (form) => {
   }
 }
 
+/**For update user's password check two same values in form before submit it*/
 const confirm = () => {
   frm = document.forms['passform'];
   if(frm.elements['newpassword'].value == frm.elements['confirmpassword'].value) {
