@@ -1,8 +1,8 @@
 from homepage.models import *
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.http import JsonResponse, HttpRequest
+from django.http import JsonResponse, HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 import json
@@ -92,7 +92,7 @@ def substituts(request, id):
     """ Select all product with an healthier nutriscore and
     verify if product is in favoris user"""
 
-    selection = Product.objects.get(id=id)
+    selection = get_object_or_404(Product, id=id)
     product_list = Product.objects.filter(
         id_category=selection.id_category, nutriscore__lt=selection.nutriscore
     ).order_by("nutriscore")
@@ -157,7 +157,7 @@ def search(request):
 def detail(request, id):
     """ load detail page of the selected product"""
 
-    detail = Product.objects.get(id=id)
+    detail = get_object_or_404(Product, id=id)
 
     context = {
         "product": detail,
@@ -188,7 +188,10 @@ def favoris(request):
 
 def delete(request,id):
     """ delete the saved product and load favoris page"""
-    Favoris.objects.get(product_id=id, user=request.user).delete()
+
+    f = Favoris.objects.filter(product_id=id, user=request.user)
+    if f.exists():
+        f.delete()
 
     product_list = Favoris.objects.filter(user=request.user)
     product = make_a_pagination(request, product_list)
@@ -260,3 +263,9 @@ def newpass(request):
 
 
     return render(request, "homepage/update.html", context)
+
+
+def notfound(request, exception):
+    """ load 404 page and return status code 404 """
+    HttpResponse.status_code = 404
+    return render(request, "homepage/404.html")

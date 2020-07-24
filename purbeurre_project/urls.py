@@ -15,8 +15,10 @@ Including another URLconf
 """
 
 from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import include, url, handler404
 from django.contrib import admin
+
+handler404='homepage.views.notfound'
 
 urlpatterns = [
     url(r'^', include('homepage.urls')),
