@@ -101,7 +101,6 @@ class LoginTestCase(TestCase):
         User.objects.create_user("temporary", "temporary@mail.com", "secret")
 
     def test_login(self):
-        user = User.objects.get(username="temporary")
         c = Client()
         c.login(username="temporary", password="secret")
         response = c.post(
@@ -218,18 +217,17 @@ class DeleteTestCase(TestCase):
         User.objects.create_user("temporary", "temporary@mail.com", "secret")
         create_temporary_datas()
 
-
     def test_delete(self):
         product = Product.objects.get(name="temporaryProduct")
         user = User.objects.get(username="temporary")
-        favoris = Favoris.objects.create(product_id=product, user=user)
+        Favoris.objects.create(product_id=product, user=user)
         c = Client()
         c.login(username="temporary", password="secret")
 
         initial_number = Favoris.objects.count()
         response = c.get(reverse("homepage:delete", kwargs={"id": product.id}))
         new_number = Favoris.objects.count()
-        self.assertEqual(initial_number,new_number + 1)
+        self.assertEqual(initial_number, new_number + 1)
         self.assertEqual(response.status_code, 200)
 
 
@@ -240,20 +238,17 @@ class UpdateTestCase(TestCase):
     def test_update(self):
         c = Client()
         c.login(username="temporary", password="secret")
-        response=c.get(reverse("homepage:update"))
+        response = c.get(reverse("homepage:update"))
         self.assertEqual(response.status_code, 200)
 
     def test_post(self):
         c = Client()
         c.login(username="temporary", password="secret")
-        response = c.post(reverse("homepage:update"),
-        {
-        "mail": "newemail@mail.com",
-        "name" : "newname",
-        "password":"secret"
-        })
+        response = c.post(
+            reverse("homepage:update"),
+            {"mail": "newemail@mail.com", "name": "newname", "password": "secret"},
+        )
         self.assertEqual(response.status_code, 200)
-
 
 
 class NewpassTestCase(TestCase):
@@ -263,64 +258,67 @@ class NewpassTestCase(TestCase):
     def test_newpass(self):
         c = Client()
         c.login(username="temporary", password="secret")
-        response = c.post(reverse("homepage:newpass"),
-        {"actualpassword": "secret",
-        "newpassword":"newpass",
-        "confirmpassword":"newpass"
-        })
+        response = c.post(
+            reverse("homepage:newpass"),
+            {
+                "actualpassword": "secret",
+                "newpassword": "newpass",
+                "confirmpassword": "newpass",
+            },
+        )
         self.assertEqual(response.status_code, 200)
-
 
 
 # ////// Functionnal tests for new functionnalities //////
 
 
 class UpdatePageProcessFunctionnalTestCase(StaticLiveServerTestCase):
-
     def setUp(self):
         User.objects.create_user("temporary", "temporary@mail.com", "secret")
         self.driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
         self.driver.get(self.live_server_url)
-        self.driver.find_element_by_id('dropdownMenuButton').click()
-        self.driver.find_element_by_link_text('Se connecter').click()
-        self.driver.find_element_by_name('name').send_keys('temporary')
-        self.driver.find_element_by_name('password').send_keys('secret')
-        self.driver.find_element_by_id('loginbutton').click()
-        self.driver.find_element_by_id('accountbutton').click()
-        self.driver.find_element_by_link_text('Modifier mes informations de profil').click()
+        self.driver.find_element_by_id("dropdownMenuButton").click()
+        self.driver.find_element_by_link_text("Se connecter").click()
+        self.driver.find_element_by_name("name").send_keys("temporary")
+        self.driver.find_element_by_name("password").send_keys("secret")
+        self.driver.find_element_by_id("loginbutton").click()
+        self.driver.find_element_by_id("accountbutton").click()
+        self.driver.find_element_by_link_text(
+            "Modifier mes informations de profil"
+        ).click()
 
     def tearDown(self):
         time.sleep(3)
         self.driver.close()
 
     def test_to_update_page(self):
-        update_url = self.live_server_url+reverse("homepage:update")
+        update_url = self.live_server_url + reverse("homepage:update")
         self.assertEqual(self.driver.current_url, update_url)
 
     def test_update_infos(self):
-        username = self.driver.find_element_by_id('updatename')
+        username = self.driver.find_element_by_id("updatename")
         username.clear()
-        username.send_keys('temporary2')
+        username.send_keys("temporary2")
         time.sleep(1)
 
-        usermail = self.driver.find_element_by_id('updatemail')
+        usermail = self.driver.find_element_by_id("updatemail")
         usermail.clear()
-        usermail.send_keys('temporary2@mail.com')
+        usermail.send_keys("temporary2@mail.com")
         time.sleep(1)
-        self.driver.find_element_by_id('mdptoupdate').send_keys('secret')
+        self.driver.find_element_by_id("mdptoupdate").send_keys("secret")
 
         time.sleep(1)
-        self.driver.find_element_by_id('update_infos_button').click()
+        self.driver.find_element_by_id("update_infos_button").click()
 
-        new_name = self.driver.find_element_by_id('updatename').get_attribute('value')
-        self.assertEqual(new_name,'temporary2')
-        new_mail = self.driver.find_element_by_id('updatemail').get_attribute('value')
-        self.assertEqual(new_mail,'temporary2@mail.com')
-        update_url = self.live_server_url+reverse("homepage:update")
+        new_name = self.driver.find_element_by_id("updatename").get_attribute("value")
+        self.assertEqual(new_name, "temporary2")
+        new_mail = self.driver.find_element_by_id("updatemail").get_attribute("value")
+        self.assertEqual(new_mail, "temporary2@mail.com")
+        update_url = self.live_server_url + reverse("homepage:update")
         self.assertEqual(self.driver.current_url, update_url)
 
-class FavorisProcessFunctionnalTestCase(StaticLiveServerTestCase):
 
+class FavorisProcessFunctionnalTestCase(StaticLiveServerTestCase):
     def setUp(self):
         User.objects.create_user("temporary", "temporary@mail.com", "secret")
         create_temporary_datas()
@@ -329,20 +327,20 @@ class FavorisProcessFunctionnalTestCase(StaticLiveServerTestCase):
         favoris = Favoris.objects.create(product_id=product, user=user)
         self.driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
         self.driver.get(self.live_server_url)
-        self.driver.find_element_by_id('dropdownMenuButton').click()
-        self.driver.find_element_by_link_text('Se connecter').click()
-        self.driver.find_element_by_name('name').send_keys('temporary')
-        self.driver.find_element_by_name('password').send_keys('secret')
-        self.driver.find_element_by_id('loginbutton').click()
-        self.driver.find_element_by_id('favorisbutton').click()
+        self.driver.find_element_by_id("dropdownMenuButton").click()
+        self.driver.find_element_by_link_text("Se connecter").click()
+        self.driver.find_element_by_name("name").send_keys("temporary")
+        self.driver.find_element_by_name("password").send_keys("secret")
+        self.driver.find_element_by_id("loginbutton").click()
+        self.driver.find_element_by_id("favorisbutton").click()
 
     def tearDown(self):
         time.sleep(3)
         self.driver.close()
 
     def test_to_favoris_page(self):
-        favoris_url = self.live_server_url+reverse('homepage:favoris')
+        favoris_url = self.live_server_url + reverse("homepage:favoris")
         self.assertEqual(self.driver.current_url, favoris_url)
 
     def test_to_delete_favoris(self):
-        self.driver.find_element_by_link_text('Supprimez').click()
+        self.driver.find_element_by_link_text("Supprimez").click()
