@@ -7,7 +7,8 @@ install: pip install -r requirements.txt
 services : postgresql
 
 env:
-  DJANGO_SETTINGS_MODULE=purbeurre_project.settings.travis
+  jobs:
+    - DJANGO_SETTINGS_MODULE=purbeurre_project.settings.travis
   global:
     - MOZ_HEADLESS=1
 
