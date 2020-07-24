@@ -54,12 +54,12 @@
 
           {% if connected %}
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{% url 'homepage:account'%}">
+            <a class="nav-link js-scroll-trigger" href="{% url 'homepage:account'%}" id="accountbutton">
               <img src="{% static 'homepage/img/login.png' %}" alt="aliments" class="icons" >
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{%url 'homepage:favoris'%}">
+            <a class="nav-link js-scroll-trigger" href="{%url 'homepage:favoris'%}" id="favorisbutton">
               <img src="{% static 'homepage/img/carrot.png' %}" alt="aliments" class="icons" >
             </a>
           </li>
@@ -113,7 +113,7 @@
             <label for="password">Mot de passe</label>
             <input type="password" class="form-control" name="password" placeholder="mot de passe" required>
           </div>
-          <button type="submit" class="btn btn-primary">Se connecter !</button>
+          <button type="submit" class="btn btn-primary" id="loginbutton">Se connecter !</button>
         </form>
       </div>
     </div>
