@@ -93,6 +93,12 @@ form button{
   right:-0.5em;
 }
 
+.delete_me{
+  color: #c45525;
+  padding: 0.4em;
+  font-size: 0.8em;
+}
+
 .nutriscore p{
   margin-left:1em;
   margin-right:1em;

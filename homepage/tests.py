@@ -207,3 +207,23 @@ class DatabaseCmdTestCase(TestCase):
 
         fake_data.insert_data(1)
         self.assertIsNotNone(Product.objects.filter(name="fake_name"))
+
+
+class DeleteTestCase(TestCase):
+    def setUp(self):
+        User.objects.create_user("temporary", "temporary@mail.com", "secret")
+        create_temporary_datas()
+
+
+    def test_delete(self):
+        product = Product.objects.get(name="temporaryProduct")
+        user = User.objects.get(username="temporary")
+        favoris = Favoris.objects.create(product_id=product, user=user)
+        c = Client()
+        c.login(username="temporary", password="secret")
+
+        initial_number = Favoris.objects.count()
+        response = c.get(reverse("homepage:delete", kwargs={"id": product.id}))
+        new_number = Favoris.objects.count()
+        self.assertEqual(initial_number,new_number + 1)
+        self.assertEqual(response.status_code, 200)
