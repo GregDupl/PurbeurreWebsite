@@ -107,7 +107,8 @@ def substituts(request, id):
     if len(product) > 0:
         subtitle = "Vous pouvez remplacer cet aliment par :"
     else:
-        subtitle = "Désolé, nous n'avons trouvé aucun substitut plus sain pour le produit séléctionné"
+        subtitle = "Désolé, nous n'avons trouvé aucun substitut \
+        plus sain pour le produit séléctionné"
 
     context = {
         "request": "substitut",
@@ -186,7 +187,7 @@ def favoris(request):
     return render(request, "homepage/list.html", context)
 
 
-def delete(request,id):
+def delete(request, id):
     """ delete the saved product and load favoris page"""
 
     f = Favoris.objects.filter(product_id=id, user=request.user)
@@ -231,16 +232,16 @@ def update(request):
     """ load update page if request method is GET or
     update user informations (name and mail) if request mesthod is POST """
     context = {}
-    if request.method == 'POST':
-        if request.user.check_password(request.POST['password']):
-            request.user.email = request.POST['mail']
-            request.user.username = request.POST['name']
+    if request.method == "POST":
+        if request.user.check_password(request.POST["password"]):
+            request.user.email = request.POST["mail"]
+            request.user.username = request.POST["name"]
         else:
-            context['alert']='mot de passe invalide !'
+            context["alert"] = "mot de passe invalide !"
 
-    context['name']=request.user.get_username()
-    context['email']=request.user.email
-    context['connected']=request.user.is_authenticated
+    context["name"] = request.user.get_username()
+    context["email"] = request.user.email
+    context["connected"] = request.user.is_authenticated
 
     return render(request, "homepage/update.html", context)
 
@@ -254,13 +255,12 @@ def newpass(request):
         "connected": request.user.is_authenticated,
     }
 
-    if request.user.check_password(request.POST['actualpassword']):
-        request.user.set_password(request.POST['newpassword'])
+    if request.user.check_password(request.POST["actualpassword"]):
+        request.user.set_password(request.POST["newpassword"])
         request.user.save()
         update_session_auth_hash(request, request.user)
     else:
-        context['alert']='mot de passe invalide !'
-
+        context["alert"] = "mot de passe invalide !"
 
     return render(request, "homepage/update.html", context)
 
