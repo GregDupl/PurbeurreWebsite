@@ -223,7 +223,7 @@ class DeleteTestCase(TestCase):
         c.login(username="temporary", password="secret")
 
         initial_number = Favoris.objects.count()
-        response = c.get(reverse("homepage:delete"), {"id": product.id})
+        response = c.get(reverse("homepage:delete", kwargs={"id": product.id}))
         new_number = Favoris.objects.count()
         self.assertEqual(initial_number,new_number - 1)
         self.assertEqual(response.status_code, 200)
