@@ -28,6 +28,17 @@ const valider = (form) => {
   }
 }
 
+const confirm = () => {
+  frm = document.forms['passform'];
+  if(frm.elements['newpassword'].value == frm.elements['confirmpassword'].value) {
+    return true;
+  }
+  else {
+    alert("Saisir un mot de passe identique");
+    return false;
+  }
+}
+
 /** function callback for ajaxRequest */
 const success = (response) => {
   elt.innerHTML=response.message;
