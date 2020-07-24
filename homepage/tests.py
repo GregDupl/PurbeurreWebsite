@@ -227,3 +227,41 @@ class DeleteTestCase(TestCase):
         new_number = Favoris.objects.count()
         self.assertEqual(initial_number,new_number + 1)
         self.assertEqual(response.status_code, 200)
+
+
+class UpdateTestCase(TestCase):
+    def setUp(self):
+        User.objects.create_user("temporary", "temporary@mail.com", "secret")
+
+    def test_update(self):
+        c = Client()
+        c.login(username="temporary", password="secret")
+        response=c.get(reverse("homepage:update"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_post(self):
+        c = Client()
+        c.login(username="temporary", password="secret")
+        response = c.post(reverse("homepage:update"),
+        {
+        "mail": "newemail@mail.com",
+        "name" : "newname",
+        "password":"secret"
+        })
+        self.assertEqual(response.status_code, 200)
+
+
+
+class NewpassTestCase(TestCase):
+    def setUp(self):
+        User.objects.create_user("temporary", "temporary@mail.com", "secret")
+
+    def test_newpass(self):
+        c = Client()
+        c.login(username="temporary", password="secret")
+        response = c.post(reverse("homepage:newpass"),
+        {"actualpassword": "secret",
+        "newpassword":"newpass",
+        "confirmpassword":"newpass"
+        })
+        self.assertEqual(response.status_code, 200)

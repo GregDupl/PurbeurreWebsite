@@ -228,39 +228,26 @@ def legal(request):
 
 
 def update(request):
+    """ load update page if request method is GET or
+    update user informations (name and mail) if request mesthod is POST """
+    context = {}
+    if request.method == 'POST':
+        if request.user.check_password(request.POST['password']):
+            request.user.email = request.POST['mail']
+            request.user.username = request.POST['name']
+        else:
+            context['alert']='mot de passe invalide !'
 
-    context = {
-        "name": request.user.get_username(),
-        "email": request.user.email,
-        "connected": request.user.is_authenticated,
-    }
-
-    return render(request, "homepage/update.html", context)
-
-
-def newmail(request):
-    request.user.email = request.POST['mail']
-    context = {
-        "name": request.user.get_username(),
-        "email": request.user.email,
-        "connected": request.user.is_authenticated,
-    }
-
-    return render(request, "homepage/update.html", context)
-
-
-def newname(request):
-    request.user.username = request.POST['name']
-    context = {
-        "name": request.user.get_username(),
-        "email": request.user.email,
-        "connected": request.user.is_authenticated,
-    }
+    context['name']=request.user.get_username()
+    context['email']=request.user.email
+    context['connected']=request.user.is_authenticated
 
     return render(request, "homepage/update.html", context)
 
 
 def newpass(request):
+    """ update user's password if checking of actual password is correct """
+
     context = {
         "name": request.user.get_username(),
         "email": request.user.email,
