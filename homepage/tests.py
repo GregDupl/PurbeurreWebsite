@@ -270,7 +270,16 @@ class NewpassTestCase(TestCase):
         })
         self.assertEqual(response.status_code, 200)
 
+class UnknowResourceTestCase(TestCase):
+    def test_unknown_url(self):
+        c = Client()
+        response = c.get("/invalidadress")
+        self.assertEqual(response.status_code, 404)
 
+    def test_no_object(self):
+        c = Client()
+        response = c.get(reverse("homepage:detail", kwargs={"id": "1"}))
+        self.assertEqual(response.status_code, 404)
 
 # ////// Functionnal tests for new functionnalities //////
 
@@ -319,6 +328,7 @@ class UpdatePageProcessFunctionnalTestCase(StaticLiveServerTestCase):
         update_url = self.live_server_url+reverse("homepage:update")
         self.assertEqual(self.driver.current_url, update_url)
 
+
 class FavorisProcessFunctionnalTestCase(StaticLiveServerTestCase):
 
     def setUp(self):
@@ -346,3 +356,21 @@ class FavorisProcessFunctionnalTestCase(StaticLiveServerTestCase):
 
     def test_to_delete_favoris(self):
         self.driver.find_element_by_link_text('Supprimez').click()
+
+
+class UnknownresourceFunctionalTestCase(StaticLiveServerTestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+
+    def test_unknown_page(self):
+        self.driver.get(self.live_server_url + "/invalidadress")
+        self.assertIn( "Il semblerait que vous soyez perdu",self.driver.page_source)
+
+    def test_unknown_product(self):
+        self.driver.get(self.live_server_url + reverse("homepage:detail", kwargs={"id": 1}))
+        self.assertIn( "Il semblerait que vous soyez perdu",self.driver.page_source)
+
+    def tearDown(self):
+        time.sleep(3)
+        self.driver.close()
